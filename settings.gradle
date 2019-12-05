@@ -1,0 +1,2 @@
+include ':app', ':router', ':routerProcessor', ':routerAnno'
+rootProject.name='WRouter'

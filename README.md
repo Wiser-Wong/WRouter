@@ -11,6 +11,7 @@
 
         dependencies {
               implementation 'com.github.Wiser-Wong:WRouter:1.1.0'
+              annotationProcessor 'com.github.Wiser-Wong:WRouter:1.1.0'
       }
       
 ## 使用注意

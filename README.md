@@ -43,7 +43,8 @@
     
     跳转
     WRouter.create("app:OtherActivity").open(MainActivity.this);
-    
+
+* withClose:是否关闭当前Activity
 * withIntent
 * withBundle
 * withString
@@ -51,3 +52,5 @@
 * ~
 * ~
 * ~
+* withParcelable
+等等...

@@ -1,4 +1,4 @@
-package com.wiser.routerprocessor;
+package com.wiser.router_compiler;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -20,8 +20,8 @@ import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
 import com.google.auto.service.AutoService;
-import com.wiser.routeranno.ClassCreateProxy;
-import com.wiser.routeranno.Router;
+import com.wiser.router_annotation.ClassCreateProxy;
+import com.wiser.router_annotation.Router;
 
 @AutoService(Processor.class)
 public class RouterProcessor extends AbstractProcessor {
@@ -30,12 +30,12 @@ public class RouterProcessor extends AbstractProcessor {
 
 	private Messager						messager;
 
-	private Map<String, ClassCreateProxy> proxyMap = new HashMap<>();
+	private Map<String, ClassCreateProxy>	proxyMap	= new HashMap<>();
 
 	@Override public synchronized void init(ProcessingEnvironment processingEnvironment) {
 		super.init(processingEnvironment);
 		messager = processingEnvironment.getMessager();
-        filer = processingEnvironment.getFiler();
+		filer = processingEnvironment.getFiler();
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class RouterProcessor extends AbstractProcessor {
 	 * @return
 	 */
 	@Override public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        messager.printMessage(Diagnostic.Kind.NOTE, "processing...");
-        // 所有注解
+		messager.printMessage(Diagnostic.Kind.NOTE, "processing...");
+		// 所有注解
 		Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(Router.class);
 		for (Element element : elements) {
 			TypeElement typeElement = (TypeElement) element;

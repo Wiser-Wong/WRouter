@@ -1,2 +1,2 @@
-include ':app', ':router', ':routerProcessor', ':routerAnno'
+include ':app', ':router', ':router-compiler', ':router-annotation'
 rootProject.name='WRouter'

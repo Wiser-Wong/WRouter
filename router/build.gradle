@@ -27,6 +27,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api 'com.android.support:appcompat-v7:28.0.0'
-    api project(path: ':routerAnno')
-    annotationProcessor project(path: ':routerProcessor')
+    api project(path: ':router-annotation')
 }

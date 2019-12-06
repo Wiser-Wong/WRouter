@@ -1,15 +1,15 @@
 package com.wiser.wrouter;
 
+import com.wiser.router.WRouter;
+import com.wiser.router_annotation.Router;
+
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
-import com.wiser.router.WRouter;
-import com.wiser.routeranno.Router;
 
 @Router("app:MainActivity")
 public class MainActivity extends AppCompatActivity {

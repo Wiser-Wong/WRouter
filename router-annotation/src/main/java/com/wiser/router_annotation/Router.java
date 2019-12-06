@@ -1,4 +1,4 @@
-package com.wiser.routeranno;
+package com.wiser.router_annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

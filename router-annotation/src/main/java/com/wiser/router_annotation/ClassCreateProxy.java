@@ -1,4 +1,4 @@
-package com.wiser.routeranno;
+package com.wiser.router_annotation;
 
 /**
  * @author Wiser

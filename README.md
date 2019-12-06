@@ -44,6 +44,7 @@
     
     跳转
     WRouter.create("app:OtherActivity").open(MainActivity.this);
+    WRouter.create("app:OtherActivity").open(MainActivity.this,111==请求码);
 
 * withClose:是否关闭当前Activity
 * withIntent

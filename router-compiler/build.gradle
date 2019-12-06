@@ -1,4 +1,5 @@
 apply plugin: 'java-library'
+apply plugin: 'com.github.dcendents.android-maven'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -10,4 +11,4 @@ dependencies {
 sourceCompatibility = "7"
 targetCompatibility = "7"
 
-group='com.wiser.android'
+group='com.github.Wiser-Wong'

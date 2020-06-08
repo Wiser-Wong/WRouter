@@ -9,6 +9,6 @@ public class MApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        WRouter.init(this);
+//        WRouter.init(this);
     }
 }

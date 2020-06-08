@@ -1,5 +1,9 @@
 package com.wiser.router_compiler;
 
+import com.google.auto.service.AutoService;
+import com.wiser.router_annotation.ClassCreateProxy;
+import com.wiser.router_annotation.Router;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
@@ -18,10 +22,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
-
-import com.google.auto.service.AutoService;
-import com.wiser.router_annotation.ClassCreateProxy;
-import com.wiser.router_annotation.Router;
 
 @AutoService(Processor.class)
 public class RouterProcessor extends AbstractProcessor {
@@ -73,7 +73,7 @@ public class RouterProcessor extends AbstractProcessor {
 			TypeElement typeElement = (TypeElement) element;
 			Router router = typeElement.getAnnotation(Router.class);
 			// 获取key
-			String key = router.value();
+			String key = router.path();
 			// 获取带有包名的类名
 			String activityName = typeElement.getQualifiedName().toString();
 			// 获取存储的创建的类对象
@@ -90,9 +90,15 @@ public class RouterProcessor extends AbstractProcessor {
 				try {
 					JavaFileObject jfo = filer.createSourceFile(proxy.getClassFullName());
 					Writer writer = jfo.openWriter();
-					writer.write(proxy.createClassContent());
+					writer.write(proxy.createRouterClassContent());
 					writer.flush();
 					writer.close();
+
+					JavaFileObject jfoRoot = filer.createSourceFile(proxy.getClassRootFullName());
+					Writer writerRoot = jfoRoot.openWriter();
+					writerRoot.write(proxy.createMapClassContent());
+					writerRoot.flush();
+					writerRoot.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

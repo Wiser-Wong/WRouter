@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
-@Router("app:OtherActivity")
+@Router(path = "app/OtherActivity")
 public class OtherActivity extends FragmentActivity {
 
 	@Override protected void onCreate(@Nullable Bundle savedInstanceState) {

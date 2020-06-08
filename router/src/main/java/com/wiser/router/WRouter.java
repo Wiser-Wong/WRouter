@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.wiser.router_annotation.IRouterConstant;
 
@@ -42,7 +43,7 @@ public class WRouter {
 	 * @param application
 	 */
 	public static void init(Application application) {
-		List<String> classNames = getClassNames(application);
+ 		List<String> classNames = getClassNames(application);
 		for (String className : classNames) {
 			try {
 				Class<?> aClass = Class.forName(className);
@@ -88,6 +89,24 @@ public class WRouter {
 		return classNames;
 	}
 
+	/**
+	 * 获取包名下所有的class文件
+	 *
+	 * @return
+	 */
+	private static List<String> getClassNames() {
+		List<String> classNames = new ArrayList<>();
+		try {
+			for(Map.Entry<String, String> entry: RouterModule.getInstance().getModules().entrySet()){
+				Class c = Class.forName(IRouterConstant.PACKAGE_NAME + "." + IRouterConstant.CLASS_NAME + "$$" + entry.getValue());
+				classNames.add(c.getName());
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return classNames;
+	}
+
 	HashMap<String, Class<? extends Activity>> getActivates() {
 		return activates;
 	}
@@ -101,6 +120,10 @@ public class WRouter {
 	public void injectActivity(String path, Class<? extends Activity> clazz) {
 		if (TextUtils.isEmpty(path) || clazz == null) return;
 		if (activates != null) activates.put(path, clazz);
+	}
+
+	public void putModule(String path,String className){
+		RouterModule.getInstance().putModuleName(path,className);
 	}
 
 	public static IRouterDisplay create(String path) {

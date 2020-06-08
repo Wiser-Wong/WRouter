@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-@Router("app:MainActivity")
+@Router(path = "app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,12 +20,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewById(R.id.cl_parent).setBackgroundColor(Color.BLUE);
 
+        WRouter.init(getApplication());
+
         findViewById(R.id.cl_parent).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("key","路由跳转");
-                WRouter.create("app:OtherActivity").withBundle(bundle).open(MainActivity.this,111);
+                WRouter.create("app/OtherActivity").withBundle(bundle).open(MainActivity.this,111);
             }
         });
     }

@@ -10,8 +10,8 @@
       }
 
         dependencies {
-              implementation 'com.github.Wiser-Wong:WRouter:1.1.0'
-              annotationProcessor 'com.github.Wiser-Wong:WRouter:1.1.0'
+              implementation 'com.github.Wiser-Wong:WRouter:1.1.2'
+              annotationProcessor 'com.github.Wiser-Wong:WRouter:1.1.2'
       }
       
 ## 使用注意
@@ -34,7 +34,7 @@
         }
     }
     
-    @Router("app:MainActivity")
+    @Router(path = "app/MainActivity")
     public class MainActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,12 @@
     }
     
     跳转
-    WRouter.create("app:OtherActivity").open(MainActivity.this);
-    WRouter.create("app:OtherActivity").open(MainActivity.this,111==请求码);
+    WRouter.create("one/OneActivity").open(MainActivity.this);
+    WRouter.create("two/TwoActivity").open(MainActivity.this,111==请求码);
+
+## 使用注意
+   最好使用moduleName作为分类
+   需要使用/来分割moduleName和页面
 
 * withClose:是否关闭当前Activity
 * withIntent

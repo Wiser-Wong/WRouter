@@ -90,18 +90,18 @@ public class RouterProcessor extends AbstractProcessor {
 				try {
 					JavaFileObject jfo = filer.createSourceFile(proxy.getClassFullName());
 					Writer writer = jfo.openWriter();
-					writer.write(proxy.createRouterClassContent());
+					StringBuilder sb = proxy.createClassContent();
+					for(String key1: proxyMap.keySet()){
+						ClassCreateProxy proxy1 = proxyMap.get(key1);
+						sb = proxy1.createClassMethod(sb);
+					}
+					writer.write(proxy.createClassMethodEnd(sb).toString());
 					writer.flush();
 					writer.close();
-
-					JavaFileObject jfoRoot = filer.createSourceFile(proxy.getClassRootFullName());
-					Writer writerRoot = jfoRoot.openWriter();
-					writerRoot.write(proxy.createMapClassContent());
-					writerRoot.flush();
-					writerRoot.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				break;
 			}
 		}
 		return false;

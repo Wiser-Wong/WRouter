@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("key","路由跳转");
-                WRouter.create("app/OtherActivity").withBundle(bundle).open(MainActivity.this,111);
+                WRouter.create("app/ThreeActivity").withBundle(bundle).open(MainActivity.this,111);
             }
         });
     }

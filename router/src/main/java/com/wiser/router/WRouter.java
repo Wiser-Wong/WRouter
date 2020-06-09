@@ -89,24 +89,6 @@ public class WRouter {
 		return classNames;
 	}
 
-	/**
-	 * 获取包名下所有的class文件
-	 *
-	 * @return
-	 */
-	private static List<String> getClassNames() {
-		List<String> classNames = new ArrayList<>();
-		try {
-			for(Map.Entry<String, String> entry: RouterModule.getInstance().getModules().entrySet()){
-				Class c = Class.forName(IRouterConstant.PACKAGE_NAME + "." + IRouterConstant.CLASS_NAME + "$$" + entry.getValue());
-				classNames.add(c.getName());
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return classNames;
-	}
-
 	HashMap<String, Class<? extends Activity>> getActivates() {
 		return activates;
 	}
@@ -120,10 +102,6 @@ public class WRouter {
 	public void injectActivity(String path, Class<? extends Activity> clazz) {
 		if (TextUtils.isEmpty(path) || clazz == null) return;
 		if (activates != null) activates.put(path, clazz);
-	}
-
-	public void putModule(String path,String className){
-		RouterModule.getInstance().putModuleName(path,className);
 	}
 
 	public static IRouterDisplay create(String path) {

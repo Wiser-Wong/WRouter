@@ -10,8 +10,8 @@
       }
 
         dependencies {
-              implementation 'com.github.Wiser-Wong:WRouter:1.1.2'
-              annotationProcessor 'com.github.Wiser-Wong:WRouter:1.1.2'
+              implementation 'com.github.Wiser-Wong:WRouter:1.1.3'
+              // annotationProcessor 'com.github.Wiser-Wong:WRouter:1.1.3'
       }
       
 ## 使用注意

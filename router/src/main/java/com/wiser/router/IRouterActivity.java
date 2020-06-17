@@ -5,7 +5,7 @@ package com.wiser.router;
  * 
  *         传入Activity接口
  */
-public interface IRouter {
+public interface IRouterActivity {
 
     void injectActivity();
 

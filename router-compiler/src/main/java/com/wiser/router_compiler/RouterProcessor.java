@@ -30,7 +30,9 @@ public class RouterProcessor extends AbstractProcessor {
 
 	private Messager						messager;
 
-	private Map<String, ClassCreateProxy>	proxyMap	= new HashMap<>();
+	private Map<String, ClassCreateProxy>	proxyActivityMap	= new HashMap<>();
+
+	private Map<String, ClassCreateProxy>	proxyProviderMap	= new HashMap<>();
 
 	@Override public synchronized void init(ProcessingEnvironment processingEnvironment) {
 		super.init(processingEnvironment);
@@ -73,27 +75,60 @@ public class RouterProcessor extends AbstractProcessor {
 			TypeElement typeElement = (TypeElement) element;
 			Router router = typeElement.getAnnotation(Router.class);
 			// 获取key
-			String key = router.path();
+			String keyPath = router.path();
+			// 获取key
+			String keyProvider = router.provider();
 			// 获取带有包名的类名
 			String activityName = typeElement.getQualifiedName().toString();
 			// 获取存储的创建的类对象
-			ClassCreateProxy proxy = proxyMap.get(key);
-			if (proxy == null) {
-				proxy = new ClassCreateProxy(key, activityName);
-				proxyMap.put(key, proxy);
+			if (!"".equals(keyPath)){
+				ClassCreateProxy proxyA = proxyActivityMap.get(keyPath);
+				if (proxyA == null) {
+					proxyA = new ClassCreateProxy(keyPath, activityName);
+					proxyActivityMap.put(keyPath, proxyA);
+				}
+			}
+			// 获取存储的创建的类对象
+			if (!"".equals(keyProvider)){
+				ClassCreateProxy proxyP = proxyProviderMap.get(keyProvider);
+				if (proxyP == null) {
+					proxyP = new ClassCreateProxy(keyProvider, activityName);
+					proxyProviderMap.put(keyProvider, proxyP);
+				}
 			}
 		}
-		if (proxyMap.size() > 0) {
+		if (proxyActivityMap.size() > 0) {
 			// 开始写Java文件
-			for (String key : proxyMap.keySet()) {
-				ClassCreateProxy proxy = proxyMap.get(key);
+			for (String key : proxyActivityMap.keySet()) {
+				ClassCreateProxy proxy = proxyActivityMap.get(key);
 				try {
-					JavaFileObject jfo = filer.createSourceFile(proxy.getClassFullName());
+					JavaFileObject jfo = filer.createSourceFile(proxy.getClassActivityFullName());
 					Writer writer = jfo.openWriter();
-					StringBuilder sb = proxy.createClassContent();
-					for(String key1: proxyMap.keySet()){
-						ClassCreateProxy proxy1 = proxyMap.get(key1);
-						sb = proxy1.createClassMethod(sb);
+					StringBuilder sb = proxy.createInjectActivityClass();
+					for(String key1: proxyActivityMap.keySet()){
+						ClassCreateProxy proxy1 = proxyActivityMap.get(key1);
+						sb = proxy1.createInjectActivityClassContent(sb);
+					}
+					writer.write(proxy.createClassMethodEnd(sb).toString());
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
+		if (proxyProviderMap.size() > 0){
+			// 开始写Java文件
+			for (String key : proxyProviderMap.keySet()) {
+				ClassCreateProxy proxy = proxyProviderMap.get(key);
+				try {
+					JavaFileObject jfo = filer.createSourceFile(proxy.getClassProviderFullName());
+					Writer writer = jfo.openWriter();
+					StringBuilder sb = proxy.createInjectProviderClass();
+					for(String key1: proxyProviderMap.keySet()){
+						ClassCreateProxy proxy1 = proxyProviderMap.get(key1);
+						sb = proxy1.createInjectProviderClassContent(sb);
 					}
 					writer.write(proxy.createClassMethodEnd(sb).toString());
 					writer.flush();

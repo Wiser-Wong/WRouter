@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -308,4 +307,9 @@ public interface IRouterDisplay {
 	 */
 	RouterDisplay withParcelableArrayList(@NonNull String key, @NonNull ArrayList<? extends Parcelable> value);
 
+	/**
+	 * 查询Provider
+	 * @return
+	 */
+	Object buildProvider();
 }

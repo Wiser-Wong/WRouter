@@ -1,5 +1,6 @@
 package com.wiser.wrouter;
 
+import com.wiser.router.WRouter;
 import com.wiser.router_annotation.Router;
 
 import android.graphics.Color;
@@ -18,6 +19,9 @@ public class ThreeActivity extends FragmentActivity {
 		findViewById(R.id.cl_parent).setBackgroundColor(Color.RED);
 
 		Toast.makeText(this, (getIntent() != null && getIntent().getExtras() != null) ? getIntent().getStringExtra("key") : "", Toast.LENGTH_SHORT).show();
+
+		MainProvider mainProvider = (MainProvider) WRouter.create("app/MainProvider").buildProvider();
+		if (mainProvider != null) mainProvider.hello("你好啊");
 
 		findViewById(R.id.cl_parent).setOnClickListener(new View.OnClickListener() {
 

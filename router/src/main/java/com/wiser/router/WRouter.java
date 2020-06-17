@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.wiser.router_annotation.IRouterConstant;
 
@@ -24,8 +23,11 @@ public class WRouter {
 
 	private HashMap<String, Class<? extends Activity>> activates;
 
+	private HashMap<String, Class<? extends IProvider>> providers;
+
 	private WRouter() {
 		activates = new HashMap<>();
+		providers = new HashMap<>();
 	}
 
 	private static class WRouterHolder {
@@ -47,9 +49,13 @@ public class WRouter {
 		for (String className : classNames) {
 			try {
 				Class<?> aClass = Class.forName(className);
-				if (IRouter.class.isAssignableFrom(aClass)) {
-					IRouter iRouter = (IRouter) aClass.newInstance();
-					iRouter.injectActivity();
+				if (IRouterActivity.class.isAssignableFrom(aClass)) {
+					IRouterActivity iRouterActivity = (IRouterActivity) aClass.newInstance();
+					iRouterActivity.injectActivity();
+				}
+				if (IRouterProvider.class.isAssignableFrom(aClass)) {
+					IRouterProvider iRouterProvider = (IRouterProvider) aClass.newInstance();
+					iRouterProvider.injectProvider();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -93,6 +99,10 @@ public class WRouter {
 		return activates;
 	}
 
+	public HashMap<String, Class<? extends IProvider>> getProviders() {
+		return providers;
+	}
+
 	/**
 	 * 注入Activity
 	 * 
@@ -102,6 +112,17 @@ public class WRouter {
 	public void injectActivity(String path, Class<? extends Activity> clazz) {
 		if (TextUtils.isEmpty(path) || clazz == null) return;
 		if (activates != null) activates.put(path, clazz);
+	}
+
+	/**
+	 * 注入Provider
+	 *
+	 * @param path
+	 * @param clazz
+	 */
+	public void injectProvider(String path, Class<? extends IProvider> clazz) {
+		if (TextUtils.isEmpty(path) || clazz == null) return;
+		if (providers != null) providers.put(path, clazz);
 	}
 
 	public static IRouterDisplay create(String path) {

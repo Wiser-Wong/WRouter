@@ -210,4 +210,18 @@ public class RouterDisplay implements IRouterDisplay {
 		return this;
 	}
 
+	@Override
+	public Object buildProvider() {
+		if (TextUtils.isEmpty(path)) return null;
+		Class<? extends IProvider> aClass = WRouter.getInstance().getProviders().get(path);
+		try {
+			assert aClass != null;
+			return aClass.newInstance();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

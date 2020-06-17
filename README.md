@@ -46,6 +46,31 @@
     WRouter.create("one/OneActivity").open(MainActivity.this);
     WRouter.create("two/TwoActivity").open(MainActivity.this,111==请求码);
 
+    * IProvider使用
+          public interface IMainProvider extends IProvider {
+
+             void hello(String hello);
+
+          }
+
+          @Router(provider = "app/MainProvider")
+          public class MainProvider implements IMainProvider {
+
+              @Override
+              public void init(Context context) {
+
+              }
+
+              @Override
+              public void hello(String hello) {
+                  System.out.println("------------->>" + hello);
+              }
+          }
+
+          使用
+          MainProvider mainProvider = (MainProvider) WRouter.create("app/MainProvider").buildProvider();
+          if (mainProvider != null) mainProvider.hello("你好啊");
+
 ## 使用注意
    最好使用moduleName作为分类
    需要使用/来分割moduleName和页面
